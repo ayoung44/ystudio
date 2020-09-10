@@ -1,0 +1,994 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap');
+
+/* reset */
+* { margin: 0; padding: 0;}
+
+/* 각 브라우저 스타일 초기화 */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, 
+p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, 
+em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, 
+var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, 
+legend, table, tbody, tfoot, thead, tr, th, td {
+    margin:0;
+    padding:0;
+}
+h1, h2, h3, h4, h5, h6 {
+    /* 부모의 사이즈를 받도록 설정 */
+    font-size: inherit;
+}
+a {
+    text-decoration: inherit;
+    color: inherit;
+}
+li {
+    list-style: none;
+}
+
+
+/* layout */
+body {    
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+ 
+}
+.wrap {
+    width: 100%;
+    margin: 0 auto;
+
+    position: relative;
+    
+}
+
+/* header */
+header {
+    position: fixed;
+    width: 100%;
+    padding-top: 30px;
+    padding-bottom: 15px;
+
+
+    /* 우선순위로 보이기 
+    zindex 값이 높을수록 우선순위로 보인다
+    헤더가 100 
+    gnb메뉴가 200 */
+    z-index: 100;   
+
+    transition: all 0.5s;
+}
+.innerHeader {
+    height: 80px;
+    padding: 0 80px;
+}
+
+.innerHeader .logo {
+    width: 170px;
+    height: 60px;
+
+    float: left;
+    margin-right: 180px;
+}
+.innerHeader .logo a {
+    /* a 는 인라인요소 -> 블록으로 변경 */
+    display: block;
+    cursor: pointer;
+    
+    /* 로고의 100% */
+    width: 100%;
+    height: 100%;    
+    position: relative;
+}
+
+/* 이미지 두개 다 포함 */
+.innerHeader .logo a img {
+    width: 100%;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.innerHeader .logo a img:nth-child(2) {
+    /* 2번쨰 이미지 안보이게 설정 */
+    opacity: 0;
+
+    transition: all 0.3s;
+}
+
+.innerHeader .introTxt {
+    float: left;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 70px;
+}
+
+.innerHeader .menuOpen {
+    float: right;
+    display: block;
+   
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+
+    margin-top: 20px;
+
+}
+
+.innerHeader .menuOpen span {
+    margin-top: -6px;
+    margin-left: 15px;
+    font-size: 33px;
+
+    /* 나란히 정렬 */
+    display: inline-block;
+
+    /* 세로축 정렬 */
+    vertical-align: middle;
+    
+}
+
+
+/* fixHeader */
+/* 헤더에 마우스를 올렸을 때 */
+header.on {
+    padding: 20px 0 0;
+    transition: all 0.5s;
+}
+header:before {
+    content: '';
+    width: 100%;
+    height: 0;
+    background: #222;
+
+    position: absolute;
+    top: 0;
+
+    /* 헤더보다 뒤에 위치하도록 */
+    z-index: -1;
+    transition: all 0.3s;
+}
+header.on:before {
+    height: 100%;
+    border-bottom: 1px solid #2c2c2c;
+    transition: all 0.5s;
+}
+header.on .innerHeader .logo img:nth-child(2) {
+    opacity: 1;
+
+}
+
+
+
+/* gnb */
+.gnb {
+    /* 패딩을 줘도 width값이 늘어나지 않게 하기위해서 */
+    box-sizing: border-box;
+    padding: 70px 100px;
+    background: #000;
+    color: #666;
+    
+    /* 모니터 화면에 100% */
+    height: 100vh;
+
+    position: absolute;
+    top: 0;
+    /* -100% : 우리눈에 보이지 않는다. 
+    헤더 위에 위치하도록 z index를 200 으로 헤더보다 높게 설정 */
+    right: -100%;
+    z-index: 200;
+    transition: all 0.8s;
+}
+/* 햄버거 버튼을 눌렀을 때 상태 */
+.gnb.on {
+    right: 0;
+    transition: all 0.8s;
+}
+.gnb .close {
+    display: block;
+    font-size: 40px;
+    color: #fff;
+    float: right;   
+}
+.gnb ul {
+    float: left;
+    margin-right: 200px;
+}
+.gnb ul li a {
+    display: block;
+    font-size: 36px;
+    font-weight: bold;
+    line-height: 1.7;
+    transition: all 0.3s;
+}
+.gnb ul li:first-child a, .gnb ul li:hover {
+    color: #fff;
+    transition: all 0.5s;
+}
+.gnb .gnb-contact {
+    box-sizing: border-box;
+    margin-top: 650px;
+
+    font-size: 17px;
+    color: #fff;
+    font-weight: bold;
+    line-height: 1.5;
+
+} 
+
+
+
+/* visual */
+.visual {
+    position: relative;
+}
+.visual .slide li {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: #222;
+}
+.visual .slide li img {
+    /* 이미지 슬라이드 -> 포지션 absolute
+    그 위에 relative 가 있어야한다. */
+    position: absolute;
+    margin: 0 auto;
+    right: 0;
+    bottom: 0;
+
+    width: 100%;
+}
+
+
+.visual .slide li .text {
+    position: absolute;
+    left: 10%;
+    top: 45%;
+    color: #fff;
+    transform: translateY(-50%);
+    font-size: 18px;
+}
+.visual .slide li .text h3 {
+    font-size: 50px;
+    margin: 30px 0;
+}
+.visual .slide li .text a {
+    display: inline-block;
+
+}
+.visual .slide li .text a span {
+    font-size: 14px;
+    margin-left: 5px;
+}
+.visual .slide li .scroll {
+    position: absolute;
+    color: #ccc;
+    font-size: 11px;
+    font-weight: bold;
+
+    left: 50px;
+    bottom: 50px;
+
+    transform: rotate(-90deg);
+}
+
+/* 비주얼 slick - 화살표 위치 지정 */
+.slick-arrow {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    background: #fff;
+    z-index: 20;
+    text-indent: -9999px;
+    border: none;
+}
+.slick-arrow:after {
+    content: '<';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    color: #888;
+    font-size: 20px;
+    left: 0;
+    top: 0;
+    text-indent: 0px;
+    font-weight: 300;
+    transition: all 0.2s;
+}
+.slick-arrow.slick-prev {
+    bottom: 60px;
+
+}
+.slick-arrow.slick-next:after {
+    content: '>';
+}
+.slick-arrow:hover {
+    cursor: pointer;
+    background: #ccc;
+    transition: all 0.5s;
+}
+.slick-arrow:hover:after {
+    font-size: 28px;
+    color: #333;
+    transition: all 0.2;
+}
+
+/* 이미지 슬라이드 모션 */
+.slick-active .text p {
+    animation-name: text1;
+    animation-duration: 0.8s;
+}
+@keyframes text1 {
+    0% {
+        opacity: 0; transform: rotateX(180deg) translateY(-150px)
+    }
+    20% {
+        opacity: 0; transform: rotateX(180deg) translateY(-150px)
+    }
+    100% {
+        opacity: 1; transform: rotateX(0) translateY(0)
+    }
+}
+
+.slick-active .text a {
+    animation-name: text2;
+    animation-duration: 0.8s;
+}
+@keyframes text2 {
+    0% {
+        opacity: 0; transform: rotateX(180deg) translateY(150px)
+    }
+    20% {
+        opacity: 0; transform: rotateX(180deg) translateY(150px)
+    }
+    100% {
+        opacity: 1; transform: rotateX(0) translateY(0);
+    }
+}
+
+.slick-active .text h3 {
+    animation-name: text3;
+    animation-duration: 0.8s;
+}
+@keyframes text3 {
+    0% { 
+        transform: translateX(0)
+    }
+    40% {
+        transform: translateX(-50px)
+    }
+    100% {
+        transform: translateX(0)
+    }
+}
+.slick-active .scroll {
+    animation-name: scroll;
+    animation-duration: 1s;
+}
+@keyframes scroll {
+    0% { 
+        opacity: 0; left: -100px;
+    }
+    30% {
+        opacity: 0; left: -100px;
+    }
+    100% {
+        opacity: 1; left: 50px;
+    }
+}
+
+.slick-active img {
+    animation-name: img;
+    animation-duration: 1s;
+}
+@keyframes img {
+    0% { 
+        opacity: 0; right: -80px; transform: scale(0.99);
+    }
+    100% {
+        opacity: 1; right: 0px; 
+    }
+}
+
+
+
+/* contents */
+.contents {
+    background: #1b1b1b;
+    padding: 120px 0;
+
+    color: #fff;
+
+    /* 넘치는 부분을 감싸준다 */
+    overflow: hidden;
+}
+
+.contents .mainText {
+    position: relative;
+    width: 1170px;
+    
+    margin: 0 auto;
+    padding-bottom: 60px;
+
+    /* mainText 자식요소 h3 p 에 float 값을 줘서 부모에는 overflow hidden 을 줘야함 */
+    overflow: hidden;
+}
+.contents .mainText:after {
+    position: absolute;
+    left: -22px;
+    top: 75px;
+
+    content: '”';
+    font-size: 300px;
+}
+.contents .mainText:before {
+    position: absolute;
+    left: 50px;
+    top: 150px;
+    content: '';
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #ffec03;
+} 
+
+.contents .mainText h3 {
+    font-size: 25px;
+    font-weight: bold;
+
+    /* 글자 줄 간격 */
+    line-height: 1.2;
+    float: left;
+    width: 30%;
+
+} 
+
+.contents .mainText p {
+    float: right;
+    width: 70%;
+
+    font-size: 26px;
+    line-height: 1.4;
+}
+
+.contents .mainText span {
+    display: block;
+
+    color: #999999;
+    font-size: 18px;
+
+    margin-top: 60px;
+}
+
+
+/* project */
+.contents .project {
+    color: #fff;
+}
+.contents .project .top {
+    width: 1170px;
+    height: 90px;
+
+    /* top 좌우 bottom */
+    margin: 130px auto 60px;
+    
+}
+.contents .project .top h3 {
+    font-size: 36px;
+    font-weight: bold;
+
+    /* 줄간격 */
+    line-height: 1.3;
+
+    float: left;
+}
+.contents .project .top a {
+    display: block;
+    font-size: 17px;
+    float: right;
+}
+.contents .project .top a span {
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+
+/* ul */
+.contents .project ul {
+/* 위에 적용된 float 값을 제거하기 위해서  */
+    clear: both;
+
+    width: 98%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.contents .project ul li {
+    float: left;
+    width: 24.2%;
+    margin-right: 1%;
+
+}
+.contents .project ul li:last-child {
+    margin-right: 0;
+}
+
+.contents .project ul li a {
+    display: block;
+
+    /* 24.2 다 차지하게  */
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    /* img     transform: scale(1.2); 할 떼 넘치는 부분은 안보이게  */
+    overflow: hidden;
+}
+
+/* a영역의 마우스 hover */
+.contents .project ul li a:hover img {
+    transform: scale(1.2);
+
+    /* 마우스 올릴 때 */
+    transition: all 1s;
+
+}
+.contents .project ul li a img {
+    width: 100%;
+
+    /* 마우스 뗄 때 */
+    transition: all 0.5s;
+    
+}
+.contents .project ul li a .name {
+    position: absolute;
+    width: 270px;
+    font-size: 20px;
+    right: 0;
+    bottom: 0;
+    background: #1b1b1b;
+
+    padding: 15px 15px;
+    text-align: right;
+
+    /* width 값은 그대로 유지하고 padding 이 안의 영역으로 갈 수 있도록
+    border box 를 준다. */
+    box-sizing: border-box;
+}
+.contents .project ul li a .name span {
+    font-size: 15px;
+    font-weight: bold;
+}
+.contents .project ul li a .name h3 {
+    text-transform: uppercase;
+}
+
+
+/* 파트너 */
+.contents .partner {
+    width: 1170px;
+    margin: 120px auto;
+    color: #fff;
+}
+.contents .partner h3 {
+    font-size: 17px;
+    font-weight: 400;
+}
+
+.contents .partner ul {
+    overflow: hidden;
+}
+
+.contents .partner ul li {
+    float: left;
+
+    width: 29%;
+    height: 100px;
+    margin-top: 80px;
+
+    text-align: center;
+
+
+}
+.contents .partner ul li:nth-child(1),
+.contents .partner ul li:nth-child(5) {
+    width: 21%;
+    text-align: left;
+}
+/* 4의 배수 자식 */
+.contents .partner ul li:nth-child(4n) {
+    width: 21%;
+    text-align: right;
+}
+.contents .partner ul li img {
+    display: inline-block;
+
+    /* 1: 선명. 0: 없어짐 */
+    opacity: 0.4;
+    transition: all 0.3s;
+
+}
+
+.contents .partner ul li:hover img {
+    opacity: 1;
+    transition: all 0.3s;
+}
+
+
+/* contact */
+.contact {
+    position: relative;
+    width: 100%;
+    background: url(../img/contact.jpg)no-repeat;
+    padding: 200px 0;
+    background-size: 90%;
+    background-position: left;
+
+    /* 스크롤해도 이미지가 고정된다. */
+    background-attachment: fixed;
+
+    color: #fff;
+
+}
+.contact .contact-inner {
+    width: 1170px;
+    margin: 0 auto;
+
+    font-size: 16px;
+    line-height: 1.3;
+}
+
+.contact .contact-inner h3 {
+    font-weight: 400;
+
+}
+.contact .contact-inner .tell {
+    margin: 50px 0;
+    font-size: 60px;
+    font-weight: bold;
+}
+
+
+footer {
+    background: #1b1b1b;
+    color: #999999;
+    padding: 0 80px 80px;
+    font-size: 16px;
+    position: relative;
+}
+footer ul {
+    overflow: hidden;
+}
+footer ul li {
+    float: left;
+    width: 33.3333%;
+}
+footer ul li:nth-child(2) {
+    color: #fff;
+
+
+    line-height: 2;
+
+}
+footer ul li:nth-child(2) span {
+    font-weight: bold;
+    padding-right: 15px;
+    color: #999999;
+}
+footer .goTop {
+    position: absolute;
+    right: 40px;
+    bottom: 40px;
+
+    font-size: 45px;
+    color: #fff;
+}
+
+/* 반응형 */
+/* 1200px */
+@media screen and (max-width: 1200px) {
+    br.mo {
+        display: none;
+    }   
+    .contents .mainText, .contents .project .top, .contents .partner, .contact .contact-inner {
+        width: 90%;
+    }
+    .contents .project ul li a .name {
+        position: relative;
+        width: 100%;
+        padding-bottom: 30px;
+        font-size: 20px;
+    }
+    .contents .project ul li a .name:after {
+        content: '⟶';
+        position: absolute;
+        right: 15px;
+        bottom: 0;
+        font-size: 18px;
+    }
+    .contents .project ul li a:hover img {
+        transform: scale(1);
+    }
+    .contact {
+        width: 90%;
+        background-attachment: scroll;
+        background-position: center;
+
+        /* 가로세로 비율을 유지 */
+        background-size: cover;
+    }
+    footer .goTop {
+        right: 20px;
+        bottom: 20px;
+    }
+}
+ 
+/* 1024px */
+@media screen and (max-width: 1024px) {
+    .visual .slide li img {
+        width: auto;
+        right: -30%;
+    }
+    @keyframes img {
+        0% { 
+            opacity: 0; right: -50%; transform: scale(0.99);
+        }
+        100% {
+            opacity: 1; right: -30%; 
+        }
+    } 
+    .visual .slide li .text h3 {
+        font-size: 40px;
+    }   
+}
+
+/* 768px */
+@media screen and (max-width: 768px) {
+    header {
+        padding-top: 20px;
+    }
+    header.on {
+        padding: 10px 0 0;
+    }
+    .innerHeader {
+        padding: 0 40px;
+        height: 70px;
+    }
+    .innerHeader .logo {
+        width: 150px; margin-right: 150px;
+    }
+    .innerHeader .introTxt {
+        line-height: 60px;
+    }
+
+    .gnb {
+        padding: 70px;
+    }
+    .gnb ul {
+        margin-right: 180px;
+    }
+    .visual .slide li img {
+        width: auto; 
+        /* 높이 100%를 기준으로 auto */
+        right: -68%;
+    }
+    @keyframes img {
+        0% { 
+            opacity: 0; right: -80%; transform: scale(0.99);
+        }
+        100% {
+            opacity: 1; right: -68%; 
+        }
+    }
+    .visual .slide li .text h3 {
+        font-size: 33px;
+    }  
+    .contents .mainText:after {
+        font-size: 280px;
+        left: -19px;
+
+    }
+    .contents .mainText:before {
+        width: 90px; height: 90px;
+    }
+    .contents .project ul {
+        width: 95%;
+    }
+    .contents .project ul li {
+        width: 48.9%;
+        margin-right: 2.2%;
+    }
+    .contents .project ul li:nth-child(2n) {
+        margin-right: 0;
+    } 
+    footer {
+        padding: 0 30px 30px;
+    }
+    footer ul li {
+        width: 50%;
+        height: 110px;
+    }
+}
+
+/* 650px */
+@media screen and (max-width: 650px) {
+    body {
+        font-size: 14px;
+    }
+    .innerHeader {
+        padding: 0 15px;
+        height: 55px;
+    }
+    .innerHeader .logo {
+        width: 120px; 
+    }
+    .innerHeader .introTxt {
+        line-height: 55px;
+    }
+    .innerHeader .menuOpen {
+        /* menu 버튼 없어짐 */
+        color: transparent;
+        margin-top: 10px;
+    }
+    .innerHeader .menuOpen span {
+        color: #fff;
+        font-size: 28px;
+  
+    }
+    header.on .introTxt {
+        opacity: 0;
+    }
+    .gnb {
+        padding: 30px;
+        width: 70%;
+        font-size: 40px;
+    }
+    .gnb ul li a, .gnb .close {
+        font-size: 30px;
+    }
+    .visual .slide li img {
+        width: auto;
+        right: -110%;
+    }
+    @keyframes img {
+        0% { 
+            opacity: 0; right: -115%; transform: scale(0.99);
+        }
+        100% {
+            opacity: 1; right: -110%; 
+        }
+    }
+
+    .visual .slide li .text h3 {
+        font-size: 28px;
+    } 
+    .visual .slide li .text {
+        font-size: 15px;
+    }
+
+    .visual .slide li .scroll {
+        font-size: 12px;
+        left: 10px;
+    }
+    @keyframes scroll {
+        0% { 
+            opacity: 0; left: -50px;
+        }
+        30% {
+            opacity: 0; left: -50px;
+        }
+        100% {
+            opacity: 1; left: 10px;
+        }
+    }
+    .slick-arrow {
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+    }
+    .slick-arrow.slick-prev {
+        bottom: 50px;
+    }
+
+    .contents {
+        padding: 80px 0;
+    }
+    .contents .mainText h3 {
+        width: 100%;
+    }
+    .contents .mainText:before {
+        top: 80px;
+        left: 45px;
+    }
+    .contents .mainText:after {
+        top: 15px;
+        font-size: 250px
+    }
+    .contents .mainText p {
+        font-size: 20px;
+        width: 100%;
+        margin-top: 150px;
+    }
+    .contents .mainText span {
+        font-size: 18px;
+        font-weight: 700;
+    }
+    .contents .project .top {
+        margin: 40px auto 0;
+    }
+    .contents .project .top h3 {
+        font-size: 25px;
+    }
+    .contents .project .top a {
+        font-size: 15px;
+        margin-top: 30px;
+    }
+    .contents .project ul {
+        width: 92%;
+
+    }
+    .contents .project ul li {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 35px;
+    }
+    .contents .project ul li a .name {
+        text-align: left;
+        padding-bottom: 0;
+    }
+
+    .contents .partner {
+        margin: 80px auto;
+    }
+    .contents .partner ul {
+        margin-top: 15px;
+    }
+    .contents .partner ul li {
+        width: 50%;
+        height: 80px;
+        line-height: 80px;
+
+        text-align: center;
+        margin-top: 20px;
+    }
+    .contents .partner ul li:nth-child(1), .contents .partner ul li:nth-child(5) {
+        width: 50%;
+        text-align: center;
+    }
+    .contents .partner ul li:nth-child(4) img {
+        width: 30%;
+    }
+    .contents .partner ul li:nth-child(4n) {
+        width: 50%;
+        text-align: center;
+    }
+
+    .contents .partner ul li img {
+        width: 50%;
+        line-height: 80px;
+    }
+
+    .contact {
+        width: 100%;
+    }
+    .contact .contact-inner {
+        font-size: 14px;
+    }
+    .contact .contact-inner .tell {
+        margin: 30px 0;
+        font-size: 35px;
+    }
+    footer ul li {
+        width: 100%;
+    }
+    footer ul li:nth-child(2) {
+        font-size: 14px;
+    }
+    footer .goTop {
+        font-size: 32px;
+        right: 15px;
+        bottom: 15px;
+
+    } 
+}
